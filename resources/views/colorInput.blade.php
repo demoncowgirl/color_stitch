@@ -21,13 +21,15 @@
     <body>
 
       @include('inc/navbar')
+      @auth
       @include('flash-message')
+      @endauth
 
    <div class="container">
      <div class="row">
        <div class="col-sm-6 col-md-4 col-lg-2">
           <h2>Floss Color Input</h2>
-           <form method="POST" action="{{ action('App\Http\Controllers\ColorController@store' ) }}" enctype="multipart/form-data">
+           <form method="POST" action="{{ route('colors.store')}}" enctype="multipart/form-data">
             <label for="dmc">DMC Floss Color:</label><br>
             <input type="text" id="dmc" name="dmc" placeholder="Required"><br>
             <label for="hex">Hex Color:</label><br>
@@ -53,19 +55,7 @@
           </tr>
         </thead><br>
         <tbody>
-          @foreach($colors as $color)
-          <tr>
-            <td>{{ $color->id}}</td>
-            <td>{{ $color->dmc }}</td>
-            <td>{{ $color->hex}}</td>
-            <td>{{ $color->name}}</td>
-            <td>
-              <button type="button" class="btn btn-info">Delete
-                <a href="{{ route('colors.destroy', ['id' => $color -> id]) }}"></a>
-              </button><br>
-            </td>
-          </tr>
-          @endforeach
+
         </tbody>
         </div>
       </div>
@@ -74,9 +64,9 @@
     <a href="http://peppermintpurple.com" target="_blank" rel="noopener noreferrer">Peppermint Purple Website</a><br>
     <a href="http://stitchpalettes.com" target="_blank" rel="noopener noreferrer">Stitch Pallettes Website</a><br>
     <a href="http://dmc.crazyartzone.com" target="_blank" rel="noopener noreferrer">Crazy Art Zone Website</a>
-  </div>
-  <div class="container">
-    <h2>My Palettes</h2>>
+  <!-- </div> -->
+  <!-- <div class="container"> -->
+    <h2>My Palettes</h2>
     <div class="table table-bordered">
       <thead>
         <tr>
@@ -85,20 +75,7 @@
         </tr>
       </thead><br>
       <tbody>
-        @foreach($palettes as $palette)
-        <tr>
-          <td>{{ $palette->id}}</td>
-          <td>{{ $palette->palette_name}}</td>
-          @foreach($color_array as $array)
-          <td>{{$array}}
-            @endforeach
-          <td>
-            <button type="button" class="btn btn-info">Delete
-              <a href="{{ route('palettes.destroy', ['id' => $palette -> id]) }}"></a>
-            </button><br>
-          </td>
-        </tr>
-        @endforeach
+
       </tbody>
       </div>
       <div class="col-sm-6 col-md-4 col-lg-2">

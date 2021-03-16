@@ -14,11 +14,11 @@ class ColorsTable extends Migration
      public function up()
      {
          Schema::create('colors', function (Blueprint $table) {
-             $table->increments('id');
+             $table->increments('id')->bigInteger();
              $table->string('hex');
              $table->string('dmc');
              $table->string('name');
-             $table->unsignedInteger('user_id')->references('id')->on('users');
+             $table->bigInteger('user_id')->unsigned()->references('id')->on('users');
              $table->timestamps();
          });
      }

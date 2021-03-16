@@ -11,12 +11,12 @@ class PalettesTable extends Migration
      *
      * @return void
      **/
-     
+
      public function up()
        {
            Schema::create('palettes', function (Blueprint $table) {
-               $table->id();
-               $table->unsignedInteger('user_id')->references('id')->on('users');
+               $table->increments('id')->bigInteger();
+               $table->bigInteger('user_id')->unsigned()->references('id')->on('users');
                $table->string('palette_name');
                $table->string('colors_array');
                $table->timestamps();

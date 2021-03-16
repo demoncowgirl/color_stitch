@@ -2,8 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\User;
 use App\Models\Color;
 use App\Models\Palette;
+
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\PaletteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +25,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+  return redirect('/colorInput')->with('status', 'You are logged in!');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
@@ -41,10 +45,10 @@ Route::get('auth/register', function(){
 
 //Routes for Colors
 Route::resources(['colors' => ColorController::class]);
-Route::get('/colors/index', 'App\Http\Controllers\ColorController@index');
-Route::post('/colors/store', 'App\Http\Controllers\ColorController@store');
-Route::get('/colors/getColors', 'App\Http\Controllers\ColorController@getColors');
-Route::get('/colors/delete/{id}', 'App\Http\Controllers\ColorController@destroy');
+Route::get('/colors',[Colorcontroller::class, 'index']);
+Route::post('/colors/store', [Colorcontroller::class, 'store'])->name('colors.store');
+Route::get('/colors/getColors', [Colorcontroller::class, 'getColors'])->name('getColors');
+Route::get('/colors/delete/{id}', [Colorcontroller::class, 'destroy'])->name('colors.destroy');
 
 Route::get('/squareLayout', function () {
     $colors->DB::table('colors')
@@ -58,17 +62,18 @@ Route::get('/squareLayout', function () {
       return view('rectangleLayout', ['colors'=> $colors]);
   });
 
-  Route::get('/colorInput', function() {
-    $colors->DB::table('colors')
-    -> get();
-  return view('colorInput', ['colors'=> $colors]);
-  });
+  Route::get(
+      '/colorInput',
+      [Colorcontroller::class, 'index']
+  )->name('colors');
+
+
 
 //Routes for Palettes
-Route::resources(['palettes' => PaletteController::class,]);
-Route::get('/palettes/index', 'App\Http\Controllers\PaletteController@index');
-Route::post('/palettes/store', 'App\Http\Controllers\PaletteController@store');
-Route::get('/palettes/delete/{id}', 'App\Http\Controllers\PaletteController@destroy');
+Route::resources(['palettes' => PaletteController::class]);
+Route::get('/palettes/index', [PaletteController::class, 'index'])->name('palettes.index');
+Route::post('/palettes/store', [PaletteController::class, 'store']);
+Route::get('/palettes/delete/{id}', [PaletteController::class, 'destroy']);
 
 
   Route::get('/squareLayout', function () {
@@ -77,7 +82,7 @@ Route::get('/palettes/delete/{id}', 'App\Http\Controllers\PaletteController@dest
       return view('squareLayout', ['palettes'=> $palettes]);
     });
 
-    Route::get('/rectangleLayout', function() {
+    Route::get('/rectangleLayout', function($id, $palette_name, $dmc, $name) {
           DB::table('palettes')
           ->get();
         return view('rectangleLayout', ['palettes'=> $palettes]);
