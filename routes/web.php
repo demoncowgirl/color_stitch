@@ -25,27 +25,28 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-  return redirect('/colorInput')->with('status', 'You are logged in!');
+    return redirect('/colorInput')->with('success', 'You are logged in!');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
-Route::get('auth/login', function(){
-  return view ('auth/login');
+Route::get('auth/login', function () {
+    return view('auth/login');
 });
 
-Route::get('auth/logout', function(){
-  return view ('welcome');
-});
+Route::get('auth/logout', function () {
+    return redirect('/')->with('success', 'You are logged out!');
+})->middleware(['auth'])->name('logout');
 
-Route::get('auth/register', function(){
-  return view ('auth/register');
+
+Route::get('auth/register', function () {
+    return view('auth/register');
 });
 
 
 //Routes for Colors
 Route::resources(['colors' => ColorController::class]);
-Route::get('/colors',[Colorcontroller::class, 'index']);
+Route::get('/colors', [Colorcontroller::class, 'index']);
 Route::post('/colors/store', [Colorcontroller::class, 'store'])->name('colors.store');
 Route::get('/colors/getColors', [Colorcontroller::class, 'getColors'])->name('getColors');
 Route::get('/colors/delete/{id}', [Colorcontroller::class, 'destroy'])->name('colors.destroy');
@@ -54,10 +55,10 @@ Route::get('/squareLayout', function () {
     $colors->DB::table('colors')
     -> get();
     return view('squareLayout', ['colors'=> $colors]);
-  });
+});
 
-  Route::get('/rectangleLayout', function() {
-    $colors->DB::table('colors')
+  Route::get('/rectangleLayout', function () {
+      $colors->DB::table('colors')
     -> get();
       return view('rectangleLayout', ['colors'=> $colors]);
   });
@@ -77,13 +78,13 @@ Route::get('/palettes/delete/{id}', [PaletteController::class, 'destroy']);
 
 
   Route::get('/squareLayout', function () {
-        DB::table('palettes')
+      DB::table('palettes')
         ->get();
       return view('squareLayout', ['palettes'=> $palettes]);
-    });
+  });
 
-    Route::get('/rectangleLayout', function($id, $palette_name, $dmc, $name) {
-          DB::table('palettes')
+    Route::get('/rectangleLayout', function ($id, $palette_name, $dmc, $name) {
+        DB::table('palettes')
           ->get();
         return view('rectangleLayout', ['palettes'=> $palettes]);
     });
@@ -91,7 +92,7 @@ Route::get('/palettes/delete/{id}', [PaletteController::class, 'destroy']);
     // Route::get('/colorInput', function() {
     //   DB::table('palettes')
     //     ->get();
-    // return view('colorInput', ['palettes'=> $palettes]);
+    // return view('colorInput', ['palettes'=> $palettes);
     // });
 
 //

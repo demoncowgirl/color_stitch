@@ -14,17 +14,21 @@ class ColorsTable extends Migration
      public function up()
      {
          Schema::create('colors', function (Blueprint $table) {
-             $table->increments('id')->bigInteger();
+             $table->increments('id')->unsigned();
+             $table->integer('user_id')->unsigned();
              $table->string('hex');
              $table->string('dmc');
              $table->string('name');
-             $table->bigInteger('user_id')->unsigned()->references('id')->on('users');
              $table->timestamps();
+             $table->foreign('user_id')->references('id')->on('users');
          });
      }
 
      public function down()
      {
          Schema::dropIfExists('colors');
+         $colors->foreign('user_id')
+         ->references('id')->on('users')
+         ->onDelete('cascade');
      }
 }

@@ -28,9 +28,9 @@
 
       <div class="main mt-4 mb-4 justify-content-center align-text-center">
         <div class='welcome'>
-        @auth
+        @if(Auth::user())
         <h1>Welcome {{$name = \Auth::user()->name}}!</h1>
-        @endauth
+        @endif
         @guest
       <h1>Welcome!</h1>
       <h2>Please login to continue.</h2>

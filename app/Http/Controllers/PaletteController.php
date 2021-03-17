@@ -18,35 +18,38 @@ class PaletteController extends Controller
 
 public function store() {
 
-  $palette = new Palette();
-
   $colors = DB::select('select * from colors');
 
   // $colors = $request->query->all();
-  $colorsArray= array();
+  $colorsArray= array_add($colorsArray, 'key', 'value');
 
-  if (!isset($this -> $color {
-    $i = 52-$colorsArray.length;
-  if($i<52; i++){
+  // if (!isset($this -> $color {
+  $i = 52-$colorsArray.length;
+
+  if($i<52; $i++){
   foreach ($colors as $color){
     array_push( $colorsArray, $color[$i] );
     }endforeach
   }endif
 
-$palette -> user -> $_SESSION['user_id'];
-$palette -> colorsArray = $request -> input($colorArray);
-$palette -> name = $request -> input('name');
-$palette -> name = $request -> input('name');
-// $color -> userid = $request ->
+  return $colorsArray;
 
-$palette -> save();
+  }
 
-}
+public function createPalette($colorArray){
 
-return redirect('colorInput');
+  $palette = new Palette();
 
+  $palette -> id -> increment('id');
+  $palette -> user_id -> $_SESSION['user_id'];
+  $palette -> palette_name = $request -> input('palette_name');
+  $palette -> colors_array = $request -> input($colorArray);
 
-}
+  $palette -> save();
+
+  return redirect('colorInput');
+
+  }
 
 
 
@@ -60,5 +63,5 @@ return redirect('colorInput');
 //   }
 //   shuffle($colorArray);
 //   return $colorArray;
-// }
+
 }

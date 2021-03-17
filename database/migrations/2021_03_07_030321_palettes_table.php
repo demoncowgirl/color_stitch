@@ -15,11 +15,12 @@ class PalettesTable extends Migration
      public function up()
        {
            Schema::create('palettes', function (Blueprint $table) {
-               $table->increments('id')->bigInteger();
-               $table->bigInteger('user_id')->unsigned()->references('id')->on('users');
+               $table->increments('id')->unsigned();
+               $table->integer('user_id')->unsigned();
                $table->string('palette_name');
                $table->string('colors_array');
                $table->timestamps();
+               $table->foreign('user_id')->references('id')->on('users');
            });
        }
 
@@ -31,5 +32,8 @@ class PalettesTable extends Migration
        public function down()
        {
            Schema::dropIfExists('palettes');
+           $palettes->foreign('user_id')
+           ->references('id')->on('users')
+           ->onDelete('cascade');
        }
 }

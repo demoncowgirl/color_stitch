@@ -10,7 +10,7 @@ class ColorController extends Controller
 {
 
       public function index(){
-          $colors = Color::orderBy('id', 'desc')->paginate(10);
+          $colors = Color::orderBy('id', 'asc')->paginate(10);
           return view('colorInput', ['colors' => $colors]);
           }
 
@@ -31,10 +31,10 @@ class ColorController extends Controller
 
             // store in database
             $color = new Color();
+            $color -> user_id -> $_SESSION['user_id'];
             $color -> dmc = $request -> input('dmc');
-            $color -> hex = $request -> input('hex');
+            $color -> hex = $request -> input('#'.'hex');
             $color -> name = $request -> input('name');
-            // $color -> userid = $request ->
 
             $color -> save();
 

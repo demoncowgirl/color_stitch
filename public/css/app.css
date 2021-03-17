@@ -31651,7 +31651,7 @@ td {
   text-align: center;
 }
 
-/* .table .table-bordered thead th {
+.table .table-bordered thead th {
   font-weight: 600;
 }
 
@@ -31661,7 +31661,7 @@ td {
 
 .table .table-bordered th {
   font-weight: 800;
-} */
+}
 
 .table .table-bordered td{
   white-space: nowrap;
@@ -31679,6 +31679,16 @@ td {
   border: none;
   position: relative;
   margin: 3px;
+}
+
+.mini-square{
+  width: 20px;
+  height: 20px;
+}
+
+.form {
+  border: none;
+  background-color: rgb(79,75,65, 0.5);
 }
 
 #rectangleFrame {
